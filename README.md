@@ -1,46 +1,108 @@
-# Getting Started with Create React App
+# WebP to JPEG コンバーター
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ブラウザ上で WebP 画像を JPEG 形式に変換できるウェブアプリケーションです。サーバーへのアップロードは必要なく、すべての処理はクライアントサイドで完結します。
 
-## Available Scripts
+このプロジェクトは[Create React App](https://github.com/facebook/create-react-app)を使用して構築されています。
 
-In the project directory, you can run:
+## Firebase Hosting へのデプロイ手順
 
-### `npm start`
+このアプリケーションを Firebase Hosting にデプロイする手順は以下の通りです。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 1. Firebase CLI のインストール
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+まだ Firebase CLI がインストールされていない場合は、以下のコマンドを実行します：
 
-### `npm test`
+```bash
+npm install -g firebase-tools
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Firebase へのログイン
 
-### `npm run build`
+以下のコマンドで Firebase アカウントにログインします：
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+firebase login
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ブラウザが開き、Google アカウントでの認証が求められます。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**別のアカウントでログインしたい場合**
 
-### `npm run eject`
+現在のアカウントからログアウトし、再度ログインすることでアカウントを切り替えることができます：
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+firebase logout
+firebase login
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+これでログインするGoogleアカウントを選び直せます。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 3. Firebase プロジェクトの初期化
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+プロジェクトディレクトリで以下のコマンドを実行します：
 
-## Learn More
+```bash
+firebase init
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+以下のステップに従って設定を行います：
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. 矩印を改行してスペースキーを押し、アローキーで「Hosting: Configure files for Firebase Hosting」を選択し、スペースキーを押して選択、Enter キーを押します。
+2. 既存の Firebase プロジェクトを使用するか、新しいプロジェクトを作成するか選択します。
+3. 公開ディレクトリとして「build」を入力します（Create React App の生成物はビルド後にこのディレクトリに保存されます）。
+4. シングルページアプリケーションとして設定するかどうかについては「yes」を選択します。
+5. GitHub との統合は必要に応じて設定します。
+
+### 4. アプリケーションのビルド
+
+デプロイ前にアプリケーションをビルドします：
+
+```bash
+npm run build
+```
+
+これにより、最適化された静的ファイルが`build`ディレクトリに生成されます。
+
+### 5. Firebase へのデプロイ
+
+ビルドが完了したら、以下のコマンドでデプロイします：
+
+```bash
+firebase deploy
+```
+
+デプロイが成功すると、コンソールにデプロイされた URL が表示されます。この URL を使用して、アプリケーションにアクセスできます。
+
+### 6. カスタムドメインの設定（オプション）
+
+---
+
+### GitHub統合（自動デプロイ）の後付け設定
+
+Firebase HostingのGitHub Actionsによる自動デプロイを後から設定する場合は、以下のコマンドを実行してください。
+
+```bash
+firebase init hosting:github
+```
+
+このコマンドを実行すると、対話形式でリポジトリやブランチ、ビルドコマンドなどを設定できます。
+
+**ヒント:**
+- 途中でGitHubリポジトリへのアクセス認証が求められる場合があります。
+- 既にGitHubリモートが設定されている（例: `git remote add origin ...`）必要があります。
+
+
+カスタムドメインを設定する場合は、Firebase コンソールの「Hosting」セクションから設定できます。以下の手順で行います：
+
+1. [Firebase コンソール](https://console.firebase.google.com/)にアクセスします。
+2. プロジェクトを選択し、左側のメニューから「Hosting」を選択します。
+3. 「カスタムドメイン」セクションで「カスタムドメインを追加」をクリックします。
+4. ドメインを入力し、DNS レコードの設定手順に従って設定を完了させます。
+
+## 詳細情報
+
+Create React App の詳細については、[Create React App ドキュメント](https://facebook.github.io/create-react-app/docs/getting-started)を参照してください。
+
+React について学ぶには、[React ドキュメント](https://reactjs.org/)を参照してください。
+
+Firebase Hosting の詳細については、[Firebase Hosting ドキュメント](https://firebase.google.com/docs/hosting)を参照してください。
